@@ -82,16 +82,15 @@ func eval(tokens []token) float64 {
 }
 
 func scan(text string) []token {
-	chars := []rune(text)
 	var tokens []token
 	startOfNum := -1
-	for i, c := range chars {
+	for i, c := range text {
 		if '0' <= c && c <= '9' || c == '.' {
 			if startOfNum == -1 {
 				startOfNum = i
 			}
 		} else if startOfNum != -1 {
-			numLexeme := string(chars[startOfNum:i])
+			numLexeme := string(text[startOfNum:i])
 			numVal, err := strconv.ParseFloat(numLexeme, 64)
 			if err != nil {
 				log.Fatalf("there was a badly formated number in the input at pos %d. Number tried to be converted: %s", i, numLexeme)

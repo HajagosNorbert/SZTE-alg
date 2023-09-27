@@ -90,7 +90,7 @@ func scan(text string) []token {
 				startOfNum = i
 			}
 		} else if startOfNum != -1 {
-			numLexeme := string(text[startOfNum:i])
+			numLexeme := text[startOfNum:i]
 			numVal, err := strconv.ParseFloat(numLexeme, 64)
 			if err != nil {
 				log.Fatalf("there was a badly formated number in the input at pos %d. Number tried to be converted: %s", i, numLexeme)

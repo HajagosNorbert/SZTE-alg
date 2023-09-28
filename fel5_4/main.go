@@ -23,11 +23,12 @@ func sort(nums []int) []int {
 		numCounts[num]++
 	}
 
-	sortedNums := make([]int, 0, len(nums))
+	idx := 0
 	for i, count := range numCounts {
 		for j := 0; j < count; j++{
-			sortedNums = append(sortedNums, i)
+			nums[idx] = i
+			idx++
 		}
 	}
-	return sortedNums
+	return nums
 }

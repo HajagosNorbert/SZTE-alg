@@ -1,4 +1,7 @@
-, funkcionális programozás: nincs mutáció, minden kifejezés
+# TRMC Prezentáció
+
+funkcionális programozás: nincs mutáció, minden kifejezés
+
 Syntax
  - fn típus deklaráció
  - fn definíció
@@ -66,6 +69,7 @@ doubledList = map numList double
 
 - Cons-ból a `(map tail f)` -t megjelöljük Hole-nak (inicializálatlan memóriaterület). Mindig csak egy Hole lehet. Minden mást kiszámolunk
 - Destination Passing Style - mint az acc
+- mapDps procedúra, nem fn
 - Oppurtinistic In Place Mutation
 
 ```elm

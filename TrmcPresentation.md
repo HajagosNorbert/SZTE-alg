@@ -7,20 +7,20 @@ Syntax
 ```elm
 Num a -> Num a
 sum = \n ->
-	if n == 1 then
-		n
-	else
-		n + sum (n - 1)
+    if n == 1 then
+        n
+    else
+        n + sum (n - 1)
 ```
 Transzformáció!
 
 ```elm
 Num a, Num a -> Num a
 sum = \n, acc ->
-	if n == 0 then
-		acc
-	else
-		sum (n - 1) (acc+n)
+    if n == 0 then
+        acc
+    else
+        sum (n - 1) (acc+n)
 ```
 
 - TCO után. 
@@ -28,13 +28,13 @@ sum = \n, acc ->
 
 ```elm
 sum = \n, acc ->
-	mark j
-	if n == 0 then
-		acc
-	else
+    mark j
+    if n == 0 then
+        acc
+    else
         n = n-1;
-		acc = (acc+n);
-		goto j;
+        acc = (acc+n);
+        goto j;
 ```
 
 Láncolt lista, ami "a" típusú elemeket tartalmaz (ConsList):

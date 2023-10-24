@@ -3,10 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	// permutate([]rune("abcd"))
+	permutate([]rune("abc"))
 	// combine([]rune("abcd"), 2)
 	// subset([]rune("abc"))
-	subsetIter([]rune("abc"))
+	// subsetIter([]rune("abc"))
 }
 
 // Produce every possible permutation of the provided characters

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    canvas {
+      background-color: white;
+      border: 1px solid #000;
+    }
+    body {
+      background-color: black;
+    }
+  </style>
+  <title>Directed Graph Visualization</title>
+</head>
+<body>
+  <canvas id="graphCanvas" width="500" height="500"></canvas>
+  <script>
+    // Function to draw a directed graph on a canvas
+    function drawDirectedGraph(adjacencyMatrix) {
+      const canvas = document.getElementById('graphCanvas');
+      const ctx = canvas.getContext('2d');
+      const nodeCount = adjacencyMatrix.length;
+      const radius = 200;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const angleIncrement = (2 * Math.PI) / nodeCount;
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw nodes
+      for (let i = 0; i < nodeCount; i++) {
+        const x = centerX + radius * Math.cos(i * angleIncrement);
+        const y = centerY + radius * Math.sin(i * angleIncrement);
+
+        // Draw node circle
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = '#3498db';
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw node number
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '15px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(i + 1, x, y);
+      }
+
+      // Draw edges
+      for (let i = 0; i < nodeCount; i++) {
+        for (let j = 0; j < nodeCount; j++) {
+          if (adjacencyMatrix[i][j] === 1) {
+            let startX = centerX + radius * Math.cos(i * angleIncrement);
+            let startY = centerY + radius * Math.sin(i * angleIncrement);
+            let endX = centerX + radius * Math.cos(j * angleIncrement);
+            let endY = centerY + radius * Math.sin(j * angleIncrement);
+
+            const start = pointAlongLine(startX, startY, endX, endY, 20)
+            const end = pointAlongLine(endX, endY, startX, startY, 20)
+            startX = start.x
+            startY = start.y
+            endX = end.x
+            endY = end.y
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+            ctx.closePath();
+            drawArrowhead(ctx, startX, startY, endX, endY);
+          }
+        }
+      }
+    }
+    function pointAlongLine(x1, y1, x2, y2, distFromX) {
+      // Calculate the direction vector
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+
+      // Calculate the distance between the two points
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      //másik megoldás
+      // const angle = Math.atan2(dy, dx)
+      // const ux = Math.cos(angle);
+      // const uy = Math.sin(angle);
+
+      // Normalize the direction vector
+      const ux = dx / distance;
+      const uy = dy / distance;
+
+      // Calculate the point xDistance units away from (x1, y1)
+      const x = x1 + distFromX * ux;
+      const y = y1 + distFromX * uy;
+
+      return { x, y };
+    }
+
+
+    // Function to draw arrowhead at the end of an arrow
+    function drawArrowhead(context, fromX, fromY, toX, toY) {
+      const dx = toX - fromX;
+      const dy = toY - fromY;
+      const angle = Math.atan2(dy, dx);
+      context.beginPath();
+      context.moveTo(toX, toY);
+      context.lineTo(toX - 15 * Math.cos(angle - Math.PI / 6), toY - 15 * Math.sin(angle - Math.PI / 6));
+      context.lineTo(toX - 15 * Math.cos(angle + Math.PI / 6), toY - 15 * Math.sin(angle + Math.PI / 6));
+      context.closePath();
+      context.fillStyle = '#000';
+      context.fill();
+    }
+
+    // Example adjacency matrix (replace this with your own matrix)
+    const adjacencyMatrix = [
+    // 1  2  3  4  5  6 
+      [0, 1, 0, 0, 1, 0],
+      [1, 0, 1, 0, 1, 0],
+      [0, 1, 0, 0, 0, 1],
+      [0, 1, 0, 0, 1, 0],
+      [1, 0, 0, 1, 0, 0],
+      [0, 0, 0, 1, 0, 0]
+    ];
+
+    // Draw the graph
+    drawDirectedGraph(adjacencyMatrix);
+  </script>
+</body>
+</html>
+
